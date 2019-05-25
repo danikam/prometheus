@@ -365,6 +365,13 @@ spec:
           mountPath: /etc/alertmanager-templates
         - name: alertmanager
           mountPath: /alertmanager
+      nodeSelector:
+        kubernetes.io/hostname: node4
+      tolerations:
+      - key: "key"
+        operator: "Equal"
+        value: "value"
+        effect: "NoSchedule"
       volumes:
       - name: config-volume
         configMap:
@@ -419,11 +426,11 @@ spec:
         resources:
           # keep request = limit to keep this container in guaranteed class
           limits:
-            cpu: 100m
-            memory: 100Mi
+            cpu: 500m
+            memory: 5000Mi
           requests:
-            cpu: 100m
-            memory: 100Mi
+            cpu: 500m
+            memory: 5000Mi
         env:
           # The following env variables set up basic auth twith the default admin user and admin password.
           - name: GF_AUTH_BASIC_ENABLED
@@ -454,6 +461,13 @@ spec:
         volumeMounts:
         - name: grafana-persistent-storage
           mountPath: /var/lib/grafana
+      nodeSelector:
+        kubernetes.io/hostname: node4
+      tolerations:
+      - key: "key"
+        operator: "Equal"
+        value: "value"
+        effect: "NoSchedule"
       volumes:
       - name: grafana-persistent-storage
         emptyDir: {}
@@ -2570,6 +2584,13 @@ spec:
         component: core
     spec:
       serviceAccountName: prometheus-k8s
+      nodeSelector:
+        kubernetes.io/hostname: node4
+      tolerations:
+      - key: "key"
+        operator: "Equal"
+        value: "value"
+        effect: "NoSchedule"
       containers:
       - name: prometheus
         image: prom/prometheus:v1.7.0
@@ -2584,10 +2605,10 @@ spec:
         resources:
           requests:
             cpu: 500m
-            memory: 500M
+            memory: 5000M
           limits:
             cpu: 500m
-            memory: 500M
+            memory: 5000M
         volumeMounts:
         - name: config-volume
           mountPath: /etc/prometheus
@@ -2619,6 +2640,13 @@ spec:
         image: gcr.io/google_containers/kube-state-metrics:v0.5.0
         ports:
         - containerPort: 8080
+      nodeSelector:
+        kubernetes.io/hostname: node4
+      tolerations:
+      - key: "key"
+        operator: "Equal"
+        value: "value"
+        effect: "NoSchedule"
 ---
 # ---
 # apiVersion: rbac.authorization.k8s.io/v1beta1
